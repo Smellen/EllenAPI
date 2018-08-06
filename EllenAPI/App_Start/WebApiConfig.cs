@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
-
-namespace EllenAPI
+﻿namespace EllenAPI
 {
+    using System.Web.Http;
+    using Unity;
+
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
@@ -18,7 +16,7 @@ namespace EllenAPI
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
-            );
+            );            
         }
     }
 }
