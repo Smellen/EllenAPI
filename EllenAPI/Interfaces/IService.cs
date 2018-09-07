@@ -18,8 +18,8 @@
         /// <summary>
         /// Gets the achievements for a game.
         /// </summary>
-        /// <param name="gameID">The game identifier.</param>
+        /// <param name="appID">The game identifier.</param>
         /// <returns>A list of achievements for a game.</returns>
-        Task<ISteamUserGameStats> GetAchievmentsForAGame(int gameID);
+        Task<ISteamUserGameStats> GetAchievmentsForAGame(int appID);
     }
 }

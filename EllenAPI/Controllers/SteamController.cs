@@ -35,7 +35,7 @@
             var client = new HttpClient();
             var gameCompletion = await _steamDomainService.GetAverageGameCompletion();
 
-            return $"Steam game completion: {gameCompletion}";
+            return $"Steam game completion: {gameCompletion}%";
         }
     }
 }

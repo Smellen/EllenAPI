@@ -30,6 +30,6 @@
         /// <value>
         /// The list of achievements.
         /// </value>
-        public IEnumerable<ISteamAchievement> Achievements { get; set; }
+        public IEnumerable<SteamAchievement> Achievements { get; set; }
     }
 }

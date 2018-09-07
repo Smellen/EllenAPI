@@ -26,6 +26,6 @@
         /// The list of owned Steam games.
         /// </value>
         [JsonProperty("games")]
-        public IEnumerable<ISteamGame> Games { get; set; }
+        public IEnumerable<SteamGame> Games { get; set; }
     }
 }

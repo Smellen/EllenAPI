@@ -1,5 +1,7 @@
 ﻿namespace EllenAPI.Interfaces
 {
+    using Newtonsoft.Json;
+
     /// <summary>
     /// The Steam game interface.
     /// </summary>
@@ -11,6 +13,7 @@
         /// <value>
         /// The Steam game identifier.
         /// </value>
+        [JsonProperty("appid")]
         int ID { get; set; }
 
         /// <summary>
@@ -19,6 +22,7 @@
         /// <value>
         /// The playtime.
         /// </value>
-        string Playtime { get; set; }
+        [JsonProperty("playtime_forever")]
+        int Playtime { get; set; }
     }
 }

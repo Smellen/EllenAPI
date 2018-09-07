@@ -1,5 +1,6 @@
 ﻿namespace EllenAPI.Interfaces
 {
+    using EllenAPI.Models;
     using System.Collections.Generic;
 
     /// <summary>
@@ -29,6 +30,6 @@
         /// <value>
         /// The list of achievements.
         /// </value>
-        IEnumerable<ISteamAchievement> Achievements { get; set; }
+        IEnumerable<SteamAchievement> Achievements { get; set; }
     }
 }

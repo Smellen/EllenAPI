@@ -14,6 +14,7 @@
         /// <value>
         /// The achivement name.
         /// </value>
+        [JsonProperty("apiname")]
         public string Name { get; set; }
 
         /// <summary>
@@ -22,6 +23,7 @@
         /// <value>
         ///   <c>true</c> if unlocked; otherwise, <c>false</c>.
         /// </value>
+        [JsonProperty("achieved")]
         public bool Unlocked { get; set; }
 
         /// <summary>
@@ -30,6 +32,7 @@
         /// <value>
         /// The unlock time.
         /// </value>
+        [JsonProperty("unlocktime")]
         public string UnlockTime { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace EllenAPI.Interfaces
 {
+    using EllenAPI.Models;
     using System.Collections.Generic;
 
     /// <summary>
@@ -21,6 +22,6 @@
         /// <value>
         /// The list of owned Steam games.
         /// </value>
-        IEnumerable<ISteamGame> Games { get; set; }
+        IEnumerable<SteamGame> Games { get; set; }
     }
 }

@@ -25,6 +25,6 @@
         /// The playtime.
         /// </value>
         [JsonProperty("playtime_forever")]
-        public string Playtime { get; set; }
+        public int Playtime { get; set; }
     }
 }

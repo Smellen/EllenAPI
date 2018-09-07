@@ -198,6 +198,8 @@
     <Compile Include="Interfaces\Models\ISteamGame.cs" />
     <Compile Include="Interfaces\Models\ISteamUserGameStats.cs" />
     <Compile Include="Interfaces\Models\ISteamUserOwnedGamesStats.cs" />
+    <Compile Include="Models\OwnedGamesResponse.cs" />
+    <Compile Include="Models\UserGameStatsResponse.cs" />
     <Compile Include="Models\SteamAchievement.cs" />
     <Compile Include="Models\SteamGame.cs" />
     <Compile Include="Models\SteamUserGameStats.cs" />

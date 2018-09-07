@@ -5,7 +5,6 @@
     using System.Threading.Tasks;
     using EllenAPI.Interfaces;
     using EllenAPI.Models;
-    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
     /// <summary>
@@ -51,14 +50,29 @@
         /// <summary>
         /// Gets the achievements for a game.
         /// </summary>
-        /// <param name="gameID">The game identifier.</param>
+        /// <param name="appID">The game identifier.</param>
         /// <returns>
         /// A list of achievements for a game.
         /// </returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public Task<ISteamUserGameStats> GetAchievmentsForAGame(int gameID)
+        public async Task<ISteamUserGameStats> GetAchievmentsForAGame(int appID)
         {
-            throw new System.NotImplementedException();
+            var ownedGamesUrl = $" http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid={appID}&key={_steamKey}&steamid={_steamUserID}&format=json";
+
+            var response = await _client.GetAsync(ownedGamesUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonString = await response.Content.ReadAsStringAsync();
+                var obj = JObject.Parse(jsonString);
+
+                var data = obj.ToObject<UserGameStatsResponse>();
+                return data.PlayerStats;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -79,12 +93,32 @@
                 var jsonString = await response.Content.ReadAsStringAsync();
                 var obj = JObject.Parse(jsonString);
 
-                var data = obj["response"].ToObject<SteamUserOwnedGamesStats>();
-                return data;
+                var data = obj.ToObject<OwnedGamesResponse>();
+                return data.Response;
             }
             else
             {
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// Sends the request.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <returns></returns>
+        /// <exception cref="Exception">The exception.</exception>
+        private async Task<string> SendRequest(string url)
+        {
+            var response = await _client.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsStringAsync();
+            }
+            else
+            {
+                throw new Exception($"The request was not successful. {response.StatusCode} : {response.ReasonPhrase}");
             }
         }
     }
