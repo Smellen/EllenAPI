@@ -36,7 +36,17 @@
             double unlockedAchievements = 0;
             double totalAchievements = 0;
             var allOwnedGames = await _steamAPIService.GetGamesOwnedByAUser();
+            if (allOwnedGames == null || allOwnedGames.Games == null || !allOwnedGames.Games.Any())
+            {
+                throw new ArgumentException("No owned games found.");
+            }
+
             var playedGames = allOwnedGames.Games.Where(e => e.Playtime > 0);
+
+            if (playedGames == null || !playedGames.Any())
+            {
+                throw new ArgumentException("No played games found.");
+            }
 
             foreach (var game in playedGames)
             {
@@ -52,9 +62,9 @@
                 }
             }
 
-            if (totalAchievements <= 0)
+            if (totalAchievements <= 0 && unlockedAchievements > 0)
             {
-                throw new DivideByZeroException("The total count of achivements is null!");
+                throw new DivideByZeroException("The total count of achivements is 0 but there are unlocked achievements.");
             }
 
             return (unlockedAchievements / totalAchievements) * (100 / 1);

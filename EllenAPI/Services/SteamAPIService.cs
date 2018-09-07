@@ -54,7 +54,6 @@
         /// <returns>
         /// A list of achievements for a game.
         /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public async Task<ISteamUserGameStats> GetAchievmentsForAGame(int appID)
         {
             var ownedGamesUrl = $" http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid={appID}&key={_steamKey}&steamid={_steamUserID}&format=json";
@@ -80,7 +79,7 @@
         /// </summary>
         /// <returns>A list of owned steam games.</returns>
         /// <value>
-        /// The get games owned by a user.
+        /// The owned game statistics for a user.
         /// </value>
         public async Task<ISteamUserOwnedGamesStats> GetGamesOwnedByAUser()
         {
@@ -106,8 +105,8 @@
         /// Sends the request.
         /// </summary>
         /// <param name="url">The URL.</param>
-        /// <returns></returns>
-        /// <exception cref="Exception">The exception.</exception>
+        /// <returns>The response content.</returns>
+        /// <exception cref="Exception">The exception throw from sending a request.</exception>
         private async Task<string> SendRequest(string url)
         {
             var response = await _client.GetAsync(url);
