@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("EllenAPI")]
 [assembly: AssemblyDescription("An API for Ellen")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("EB")]
+[assembly: AssemblyCompany("Ellen Burke")]
 [assembly: AssemblyProduct("EllenAPI")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
@@ -35,4 +35,3 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: NeutralResourcesLanguage("en-IE")]
-
