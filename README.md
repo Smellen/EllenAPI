@@ -13,11 +13,12 @@ To calculate the game completion several calls are made to the Steam API.
 
 # TODO List 
 _(In no particular order):_
-1. Pass in the Steam user ID as an optional parameter and set my own personal user ID as a default example Steam ID.
+1. ~~Pass in the Steam user ID as an optional parameter and set my own personal user ID as a default example Steam ID.
 2. Complete unit tests of Steam API Service and Steam Domain Service.
 3. After domain layer completion seperate out controller layer into correct endpoints. Not all endpoints belong in a Steam controller.
 4. Unit Test the controller layer.
 5. Cache the calls to Steam API.
 6. API versioning.
-7. Logging.
-8. Health check endpoint.
+7. ~~Logging.
+8. ~~Health check endpoint.
+9. Put the logs in a proper place.
