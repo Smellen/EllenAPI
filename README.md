@@ -6,9 +6,9 @@ To calculate the game completion several calls are made to the Steam API.
 1. Find all owned games by the user.
 2. Reduce this list down by only looking at games that have playtime. 
 3. For each played game try and get the user stats for that game.
-  i. Not all games have steam achievements so these games are not counted.
-4.If no achievements are unlocked that game is not counted.
-5. The final calculation is the total number of achievements for all valid games divided by the total unlocked achievements.
+    1. Not all games have steam achievements so these games are not counted.
+    2. If no achievements are unlocked that game is also not counted.
+4. The final calculation is the total number of achievements for all valid games divided by the total unlocked achievements.
 
 
 # TODO List 
