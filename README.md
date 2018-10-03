@@ -1,6 +1,8 @@
 # EllenAPI
 An API that queries the SteamAPI to calculate the average game completion for a player. Other endpoints will be added in the future.
 
+The Steam Web API Documentation: https://steamcommunity.com/dev 
+
 # Calculating the average game completion
 To calculate the game completion several calls are made to the Steam API.
 1. Find all owned games by the user.
