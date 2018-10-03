@@ -22,3 +22,4 @@ _(In no particular order):_
 7. ~~Logging.~~
 8. ~~Health check endpoint.~~
 9. Put the logs in a proper place.
+10. Find out why there are missing achievements are. Steam API cache? Incorrect looping through games? 
