@@ -1,5 +1,7 @@
 ﻿namespace EllenAPI.Controllers
 {
+    using System.Diagnostics;
+    using System.Reflection;
     using System.Web.Http;
 
     /// <summary>
@@ -14,8 +16,10 @@
         /// <returns>The API version.</returns>
         public string Get()
         {
-            // TODO: Read from config file.
-            return "EllenAPI Version 0.1";
+            var assembly = Assembly.GetExecutingAssembly();
+            var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+
+            return $"{fvi.ProductName} Version - {fvi.ProductVersion}";
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿namespace EllenAPI.Controllers
 {
     using System;
+    using System.Configuration;
     using System.Threading.Tasks;
+    using System.Web.Configuration;
     using System.Web.Http;
     using EllenAPI.Interfaces;
     using log4net;
@@ -41,12 +43,17 @@
         [HttpGet]
         public async Task<string> AverageGameCompletion(string steamID = "")
         {
+            if (string.IsNullOrWhiteSpace(steamID))
+            {
+                steamID = ConfigurationManager.AppSettings["SteamUserID"];
+            }
+
             _log.Info($"Getting the average game completion.");
-            var gameCompletion = await _steamDomainService.GetAverageGameCompletion();
+            var gameCompletion = await _steamDomainService.GetAverageGameCompletion(steamID);
 
             _log.Info($"Game Completion rate is : {gameCompletion}");
 
-            return $"Steam game completion: {gameCompletion}%";
+            return $"Steam game completion: {Math.Round(gameCompletion, 2)}%";
         }
     }
 }

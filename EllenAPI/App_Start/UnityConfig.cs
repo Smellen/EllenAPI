@@ -26,7 +26,6 @@ namespace EllenAPI
             var container = new UnityContainer();
             var httpClient = new HttpClient();
             var steamKey = ConfigurationManager.AppSettings["SteamKey"];
-            var steamUserID = ConfigurationManager.AppSettings["SteamUserID"];
             var log = LogManager.GetLogger(typeof(ILog));
 
             container.RegisterSingleton<ILog>();
@@ -35,8 +34,8 @@ namespace EllenAPI
             container.RegisterType<ISteamUserGameStats, SteamUserGameStats>();
             container.RegisterType<ISteamUserOwnedGamesStats, SteamUserOwnedGamesStats>();
 
-            container.RegisterType<IService, SteamAPIService>(new InjectionConstructor(httpClient, steamKey, steamUserID));
-            container.RegisterType<ISteamDomainService, SteamDomainService>(new InjectionConstructor(container.Resolve<IService>()));
+            container.RegisterType<IService, SteamAPIService>(new InjectionConstructor(httpClient, steamKey));
+            container.RegisterType<ISteamDomainService, SteamDomainService>(new InjectionConstructor(container.Resolve<IService>(), log));
             container.RegisterType<SteamController>(new InjectionConstructor(container.Resolve<ISteamDomainService>(), log));
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);

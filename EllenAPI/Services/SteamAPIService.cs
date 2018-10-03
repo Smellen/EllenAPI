@@ -23,40 +23,30 @@
         private string _steamKey;
 
         /// <summary>
-        /// The steam user identifier.
-        /// </summary>
-        private string _steamUserID;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="SteamAPIService"/> class.
         /// </summary>
-        public SteamAPIService(HttpClient client, string steamKey, string steamUserID)
+        public SteamAPIService(HttpClient client, string steamKey)
         {
             if (string.IsNullOrWhiteSpace(steamKey))
             {
                 throw new ArgumentNullException("steamKey");
             }
 
-            if (string.IsNullOrWhiteSpace(steamUserID))
-            {
-                throw new ArgumentNullException("steamUserID");
-            }
-
             _client = client;
             _steamKey = steamKey;
-            _steamUserID = steamUserID;
         }
 
         /// <summary>
         /// Gets the achievements for a game.
         /// </summary>
         /// <param name="appID">The game identifier.</param>
+        /// <param name="steamUserID">The steam user identifier.</param>
         /// <returns>
         /// A list of achievements for a game.
         /// </returns>
-        public async Task<ISteamUserGameStats> GetAchievmentsForAGame(int appID)
+        public async Task<ISteamUserGameStats> GetAchievmentsForAGame(int appID, string steamUserID)
         {
-            var ownedGamesUrl = $" http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid={appID}&key={_steamKey}&steamid={_steamUserID}&format=json";
+            var ownedGamesUrl = $" http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid={appID}&key={_steamKey}&steamid={steamUserID}&format=json";
 
             var response = await _client.GetAsync(ownedGamesUrl);
 
@@ -78,12 +68,13 @@
         /// Gets or sets the get games owned by a user.
         /// </summary>
         /// <returns>A list of owned steam games.</returns>
+        /// <param name="steamUserID">The steam user identifier.</param>
         /// <value>
         /// The owned game statistics for a user.
         /// </value>
-        public async Task<ISteamUserOwnedGamesStats> GetGamesOwnedByAUser()
+        public async Task<ISteamUserOwnedGamesStats> GetGamesOwnedByAUser(string steamUserID)
         {
-            var ownedGamesUrl = $"http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={_steamKey}&steamid={_steamUserID}&format=json";
+            var ownedGamesUrl = $"http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={_steamKey}&steamid={steamUserID}&format=json";
 
             var response = await _client.GetAsync(ownedGamesUrl);
 

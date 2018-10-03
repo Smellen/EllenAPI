@@ -10,9 +10,10 @@
         /// <summary>
         /// Gets or sets the get average game completion.
         /// </summary>
+        /// <param name="steamUserID">The steam user identifier.</param>
         /// <value>
         /// The get average game completion.
         /// </value>
-        Task<double> GetAverageGameCompletion();   
+        Task<double> GetAverageGameCompletion(string steamUserID);   
     }
 }

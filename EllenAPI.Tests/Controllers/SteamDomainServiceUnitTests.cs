@@ -7,6 +7,7 @@
     using EllenAPI.DomainService;
     using EllenAPI.Interfaces;
     using EllenAPI.Models;
+    using log4net;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
 
@@ -18,14 +19,19 @@
     {
 
         private Mock<IService> _mockSteamApiService;
+        private Mock<ILog> _mockLog;
         private IEnumerable<SteamGame> _listOfSteamGames;
         private SteamDomainService _mockSteamDomainSerice;
 
+        /// <summary>
+        /// The domain service test setup.
+        /// </summary>
         [TestInitialize]
         public void Setup()
         {
             _mockSteamApiService = new Mock<IService>();
-            _mockSteamDomainSerice = new Mock<SteamDomainService>(_mockSteamApiService.Object).Object;
+            _mockLog = new Mock<ILog>();
+            _mockSteamDomainSerice = new Mock<SteamDomainService>(_mockSteamApiService.Object, _mockLog.Object).Object;
             _listOfSteamGames = new List<SteamGame>()
             {
                 new SteamGame()
@@ -48,8 +54,8 @@
         [TestMethod, ExpectedException(typeof(ArgumentException))]
         public async Task SteamDomainService_GetAverageGameCompletion_NoOwnedGamesFound()
         {
-            _mockSteamApiService.Setup(e => e.GetGamesOwnedByAUser()).ReturnsAsync(new SteamUserOwnedGamesStats());
-            await _mockSteamDomainSerice.GetAverageGameCompletion();
+            _mockSteamApiService.Setup(e => e.GetGamesOwnedByAUser(It.IsAny<string>())).ReturnsAsync(new SteamUserOwnedGamesStats());
+            await _mockSteamDomainSerice.GetAverageGameCompletion("ellen");
         }
 
         /// <summary>
@@ -59,8 +65,8 @@
         [TestMethod, ExpectedException(typeof(ArgumentException))]
         public async Task SteamDomainService_GetAverageGameCompletion_NoPlayedGamesFound()
         {
-            _mockSteamApiService.Setup(e => e.GetGamesOwnedByAUser()).ReturnsAsync(new SteamUserOwnedGamesStats() { Games = new List<SteamGame>() { new SteamGame() { Playtime = 0 } } });
-            await _mockSteamDomainSerice.GetAverageGameCompletion();
+            _mockSteamApiService.Setup(e => e.GetGamesOwnedByAUser(It.IsAny<string>())).ReturnsAsync(new SteamUserOwnedGamesStats() { Games = new List<SteamGame>() { new SteamGame() { Playtime = 0 } } });
+            await _mockSteamDomainSerice.GetAverageGameCompletion("ellen");
         }
     }
 }
