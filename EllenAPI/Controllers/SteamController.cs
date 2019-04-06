@@ -1,6 +1,7 @@
 ﻿namespace EllenAPI.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Configuration;
     using System.Threading.Tasks;
     using System.Web.Configuration;
@@ -54,6 +55,25 @@
             _log.Info($"Game Completion rate is : {gameCompletion}");
 
             return $"Steam game completion: {Math.Round(gameCompletion, 2)}%";
+        }
+
+        /// <summary>
+        /// Gets the stats.
+        /// </summary>
+        /// <param name="steamID">The steam identifier.</param>
+        /// <returns>A list of all game stats.</returns>
+        [HttpGet]
+        [Route("api/stats")]
+        public async Task<IEnumerable<ISteamUserGameStats>> GetStats(string steamID = "")
+        {
+            if (string.IsNullOrWhiteSpace(steamID))
+            {
+                steamID = ConfigurationManager.AppSettings["SteamUserID"];
+            }
+
+            var stats = await _steamDomainService.GetAllOwnedGameStats(steamID);
+
+            return stats;
         }
     }
 }

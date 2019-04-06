@@ -70,7 +70,7 @@
             {
                 _log.Info($"Game: {game.ID} & Playtime: {game.Playtime}");
 
-                var gameStats = await _steamAPIService.GetAchievmentsForAGame(game.ID, steamUserID);
+                ISteamUserGameStats gameStats = await _steamAPIService.GetAchievmentsForAGame(game.ID, steamUserID);
                 if (gameStats != null && gameStats.Achievements != null && gameStats.Achievements.Any())
                 {
                     _log.Info($"{gameStats.GameName}");
@@ -114,6 +114,89 @@
             }
 
             return gameAchievements.Where(e => e.Unlocked).Count();
+        }
+
+        /// <summary>
+        /// Gets all owned games.
+        /// </summary>
+        /// <param name="steamUserID">The user identifier.</param>
+        /// <returns>The collection of all owned games by a steam user.</returns>
+        public async Task<ISteamUserOwnedGamesStats> GetAllOwnedGames(string steamUserID)
+        {
+            if (string.IsNullOrWhiteSpace(steamUserID))
+            {
+                throw new ArgumentNullException("steamUserID");
+            }
+
+            var allOwnedGames = await _steamAPIService.GetGamesOwnedByAUser(steamUserID);
+            return allOwnedGames;
+        }
+
+        /// <summary>
+        /// Gets all owned game stats.
+        /// </summary>
+        /// <param name="steamUserID">The steam user identifier.</param>
+        /// <returns>All games with achievement stats.</returns>
+        /// <exception cref="ArgumentNullException">steamUserID</exception>
+        /// <exception cref="ArgumentException">
+        /// No owned games found.
+        /// or
+        /// No played games found.
+        /// </exception>
+        public async Task<IEnumerable<ISteamUserGameStats>> GetAllOwnedGameStats(string steamUserID)
+        {
+            if (string.IsNullOrWhiteSpace(steamUserID))
+            {
+                throw new ArgumentNullException("steamUserID");
+            }
+
+            var allOwnedGames = await _steamAPIService.GetGamesOwnedByAUser(steamUserID);
+
+            if (allOwnedGames == null || allOwnedGames.Games == null || !allOwnedGames.Games.Any())
+            {
+                throw new ArgumentException("No owned games found.");
+            }
+
+            _log.Info($"All owned games count: {allOwnedGames.GameCount}");
+
+            double unlockedAchievements = 0;
+            double totalAchievements = 0;
+            List<ISteamUserGameStats> allGameStats = new List<ISteamUserGameStats>();
+
+            var playedGames = allOwnedGames.Games.Where(e => e.Playtime > 0);
+
+            if (playedGames == null || !playedGames.Any())
+            {
+                throw new ArgumentException("No played games found.");
+            }
+
+            _log.Info($"All played games: {playedGames.Count()}");
+
+            foreach (var game in playedGames)
+            {
+                _log.Info($"Game: {game.ID} & Playtime: {game.Playtime}");
+
+                ISteamUserGameStats gameStats = await _steamAPIService.GetAchievmentsForAGame(game.ID, steamUserID);
+                if (gameStats != null && gameStats.Achievements != null && gameStats.Achievements.Any())
+                {
+                    allGameStats.Add(gameStats);
+                    _log.Info($"{gameStats.GameName}");
+                    var unlocked = this.GetGameAchievementCount(gameStats.Achievements);
+                    if (unlocked > 0)
+                    {
+                        _log.Info($"{game.ID}:{gameStats.GameName} - Achievements Unlocked: {unlocked}");
+                        _log.Info($"{game.ID}:{gameStats.GameName} - Achievements Total   : {gameStats.Achievements.Count()}");
+                        unlockedAchievements += unlocked;
+                        totalAchievements += gameStats.Achievements.Count();
+                    }
+                }
+                else
+                {
+                    _log.Info($"{game.ID} - No game stats");
+                }
+            }
+
+            return allGameStats;
         }
     }
 }
