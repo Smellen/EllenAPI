@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EllenAPI", "EllenAPI\EllenAPI.csproj", "{732CB1DF-0928-41F6-99DD-72983615C994}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "src\EllenAPI", "src\EllenAPI\EllenAPI.csproj", "{732CB1DF-0928-41F6-99DD-72983615C994}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EllenAPI.Tests", "EllenAPI.Tests\EllenAPI.Tests.csproj", "{8C9308CD-697F-4879-8B16-2E847E72A691}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests\EllenAPI.Tests", "tests\EllenAPI.Tests\EllenAPI.Tests.csproj", "{8C9308CD-697F-4879-8B16-2E847E72A691}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

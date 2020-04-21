@@ -129,7 +129,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EllenAPI\EllenAPI.csproj">
+    <ProjectReference Include="..\..\src\EllenAPI\EllenAPI.csproj">
       <Project>{732CB1DF-0928-41F6-99DD-72983615C994}</Project>
       <Name>EllenAPI</Name>
     </ProjectReference>
